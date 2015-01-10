@@ -8,6 +8,7 @@ module.exports = (grunt) ->
     src: '.'
     test: 'test'
     dist: 'dist'
+    tmp: '.tmp'
 
   grunt.initConfig
     pkg: grunt.file.readJSON 'package.json'
@@ -27,11 +28,25 @@ module.exports = (grunt) ->
         files: ['Gruntfile.coffee']
         tasks: ['coffeelint:gruntfile']
 
+    # Replace @@version
+    replace:
+      dist:
+        options:
+          patterns: [
+            json: '<%= pkg %>'
+          ]
+        files: [
+          expand: true
+          src: ['<%= config.src %>/<%= pkg.name %>.coffee']
+          dest: '<%= config.tmp %>'
+        ]
+
+    # Compile CoffeeScript code
     coffee:
       dist:
         files:
           '<%= config.dist %>/<%= pkg.name %>.js': [
-            '<%= config.src %>/<%= pkg.name %>.coffee'
+            '<%= config.tmp %>/<%= pkg.name %>.coffee'
           ]
 
     # Make sure code styles are up to par and there are no obvious mistakes
@@ -56,6 +71,11 @@ module.exports = (grunt) ->
             '<%= config.dist %>/<%= pkg.name %>.js'
           ]
 
+    # Generates documentation
+    docco:
+      dist:
+        src: ['<%= config.tmp %>/<%= pkg.name %>.coffee']
+
     # Empties folders to start fresh
     clean:
       dist:
@@ -63,17 +83,10 @@ module.exports = (grunt) ->
           dot: true
           src: [
             '<%= config.dist %>/{,*/}*'
+            '<%= config.tmp %>/{,*/}*'
             '!<%= config.dist %>/.git*'
           ]
         ]
-
-    # Run some tasks in parallel to speed up the build process
-    concurrent:
-      test: [
-      ]
-      dist: [
-        'coffee:dist'
-      ]
 
     # Test settings
     karma:
@@ -83,18 +96,19 @@ module.exports = (grunt) ->
 
 
   grunt.registerTask 'test', [
-    'concurrent:test'
+    'build'
     'karma'
   ]
 
+  grunt.registerTask 'doc', [
+    'replace:dist'
+    'docco:dist'
+  ]
+
   grunt.registerTask 'build', [
-    'clean:dist'
-    'concurrent:dist'
+    'replace:dist'
+    'coffee:dist'
     'uglify'
   ]
 
-  grunt.registerTask 'default', [
-    'newer:coffeelint'
-    'test'
-    'watch'
-  ]
+  grunt.registerTask 'default', 'build'

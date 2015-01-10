@@ -1,0 +1,26 @@
+{
+  "name": "nobushi",
+  "version": "0.0.0",
+  "authors": [
+    "Koji YAMADA <kou64yama@gmail.com>"
+  ],
+  "description": "JavaScript library that is similar to the Haskell Prelude.",
+  "main": "dist/nobushi.min.js",
+  "moduleType": [
+    "amd",
+    "globals",
+    "node"
+  ],
+  "keywords": [
+    "Nobushi"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/kou64yama/nobushi",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

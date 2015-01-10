@@ -7,9 +7,10 @@ root = true
 
 [*]
 
-# Change these settings to your own preference
+# Change these settings
 indent_style = space
-indent_size = 4
+indent_size = 2
+max_line_length = 80
 
 # We recommend you to keep these unchanged
 end_of_line = lf
@@ -19,9 +20,3 @@ insert_final_newline = true
 
 [*.md]
 trim_trailing_whitespace = false
-
-[*.json]
-indent_size = 2
-
-[.jshintrc]
-indent_size = 2
