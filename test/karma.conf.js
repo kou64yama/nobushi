@@ -19,7 +19,7 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'nobushi.coffee',
+      'dist/nobushi.js',
       'test/**/*.coffee'
     ],
 
@@ -58,7 +58,7 @@ module.exports = function(config) {
 
     reporters: ['progress', 'html', 'coverage'],
     preprocessors: {
-      'nobushi.coffee': ['coverage'],
+      'dist/nobushi.js': ['coverage'],
       'test/**/*.coffee': ['coffee']
     },
     htmlReporter: {
