@@ -100,7 +100,7 @@ module.exports = (grunt) ->
 
 
   grunt.registerTask 'test', [
-    'replace:dist'
+    'build'
     'karma'
   ]
 
