@@ -57,10 +57,10 @@ nbs.curry = curry = (f) ->
 # #### Bool
 
 # Boolean "and"
-nbs['&&'] = curry (x, y) -> x && y
+nbs['&&'] = curry (x, y) -> x and y
 
 # Boolean "or"
-nbs['||'] = curry (x, y) -> x || y
+nbs['||'] = curry (x, y) -> x or y
 
 # Boolean "not"
 nbs['!'] = nbs.not = curry (x) -> not x
@@ -69,8 +69,8 @@ nbs['!'] = nbs.not = curry (x) -> not x
 
 # #### class Eq methods
 
-nbs['=='] = nbs['==='] = curry (x, y) -> x == y
-nbs['/='] = nbs['!='] = nbs['!=='] = curry (x, y) -> x != y
+nbs['=='] = nbs['==='] = curry (x, y) -> x is y
+nbs['/='] = nbs['!='] = nbs['!=='] = curry (x, y) -> x isnt y
 nbs['<'] = curry (x, y) -> x < y
 nbs['>='] = curry (x, y) -> x >= y
 nbs['>'] = curry (x, y) -> x > y
@@ -169,8 +169,8 @@ nbs.floor = curry Math.floor
 
 # #### Numeric functions
 
-nbs.even = curry (x) -> x % 2 == 0
-nbs.odd = curry (x) -> x % 2 == 1
+nbs.even = curry (x) -> x % 2 is 0
+nbs.odd = curry (x) -> x % 2 is 1
 
 # `nbs.gcd(x, y)` is the non-negative factor of both `x` and `y` of which every
 # common factor of `x` and `y` is also a factor; for example `nbs.gcd(4, 2)` =
@@ -178,26 +178,26 @@ nbs.odd = curry (x) -> x % 2 == 1
 # (That is, the common divisor that is "greatest" in the divisibility
 # preordering.)
 nbs.gcd = curry (x, y) ->
-  _gcd = (a, b) -> if b == 0 then a else _gcd b, nbs(a).rem(b)
+  _gcd = (a, b) -> if b is 0 then a else _gcd b, nbs(a).rem(b)
   _gcd nbs.abs(x), nbs.abs(y)
 
 # `nbs.lcm(x, y)` is the smallest positive integer that both `x` and `y` divide.
 nbs.lcm = curry (x, y) ->
-  if x == 0 or y == 0 then 0 else nbs.abs nbs(x).quot(nbs.gcd(x, y)) * y
+  if x is 0 or y is 0 then 0 else nbs.abs nbs(x).quot(nbs.gcd(x, y)) * y
 
 # raise a number to a non-negative integral power
 nbs['^'] = curry (x0, y0) ->
   f = (x, y) -> switch
     when nbs.even y then f (x * x), nbs(y).quot(2)
-    when y == 1 then x
+    when y is 1 then x
     else g (x * x), nbs(y - 1).quot(2), x
   g = (x, y, z) -> switch
     when nbs.even y then g (x * x), nbs(y).quot(2), z
-    when y == 1 then x * z
+    when y is 1 then x * z
     else g (x * x), nbs(y - 1).quot(2), (x * z)
   switch
     when y0 < 0 then nbs.error 'Negative exponent'
-    when y0 == 0 then 1
+    when y0 is 0 then 1
     else f x0, y0
 
 # raise a number to an integral power
@@ -386,7 +386,7 @@ nbs.scanr1 = curry (f, xs) ->
 # `nbs.replicate(n, x)` is a list of length `n` with `x` the value of every
 # element.
 nbs.replicate = curry (n, x) ->
-  if typeof x is 'string' and x.length == 1
+  if typeof x is 'string' and x.length is 1
     (x while 0 < n--).join ''
   else
     x while 0 < n--
@@ -447,7 +447,7 @@ nbs.$break = curry (p, xs) -> nbs.span ((x) -> not p x), xs
 # `nbs.elem` is the list membership predicate, usually written in infix form,
 # e.g., `nbs(x).elem(xs)`.
 nbs.elem = curry (x, xs) ->
-  for i in xs when x == i
+  for i in xs when x is i
     return true
   false
 

@@ -234,7 +234,7 @@ describe 'nbs.lcm(x, y)', ->
   ''', ->
     ps = [2, 3, 5, 7, 11, 13, 17, 19, 23]
     for x in ps
-      for y in ps when x != y
+      for y in ps when x isnt y
         expect(nbs.lcm x, y).toBe x * y
   it 'returns the 0, where either x or y are 0', ->
     expect(nbs.lcm 0, 123).toBe 0
@@ -382,7 +382,7 @@ describe 'nbs.foldl1(f, xs)', ->
     expect(nbs.foldl1 nbs['+'], [1..4]).toBe 10
     expect(nbs.foldl1 nbs['/'], [64, 4, 2, 8]).toBe 1
     expect(nbs.foldl1 nbs['/'], [12]).toBe 12
-    expect(nbs.foldl1 nbs['&&'], [1 > 2, 3 > 2, 5 == 5]).toBeFalsy()
+    expect(nbs.foldl1 nbs['&&'], [1 > 2, 3 > 2, 5 is 5]).toBeFalsy()
     expect(nbs.foldl1 nbs.max, [3, 6, 12, 4, 55, 11]).toBe 55
     expect(nbs.foldl1 ((x, y) -> (x + y) / 2), [3, 5, 10, 5]).toBe 6
   it 'throws an error, where xs is empty', ->
@@ -393,7 +393,7 @@ describe 'nbs.foldr(f, z, xs)', ->
     expect(nbs.foldr nbs['+'], 5, [1..4]).toBe 15
     expect(nbs.foldr nbs['/'], 2, [8, 12, 24, 4]).toBe 8
     expect(nbs.foldr nbs['/'], 3, []).toBe 3
-    expect(nbs.foldr nbs['&&'], true, [1 > 2, 3 > 2, 5 == 5]).toBeFalsy()
+    expect(nbs.foldr nbs['&&'], true, [1 > 2, 3 > 2, 5 is 5]).toBeFalsy()
     expect(nbs.foldr nbs.max, 18, [3, 6, 12, 4, 55, 11]).toBe 55
     expect(nbs.foldr nbs.max, 111, [3, 6, 12, 4, 55, 11]).toBe 111
     expect(nbs.foldr ((x, y) -> (x + y) / 2), 54, [12, 4, 10, 6]).toBe 12
@@ -403,7 +403,7 @@ describe 'nbs.foldr1(f, xs)', ->
     expect(nbs.foldr1 nbs['+'], [1..4]).toBe 10
     expect(nbs.foldr1 nbs['/'], [8, 12, 24, 4]).toBe 4
     expect(nbs.foldr1 nbs['/'], [12]).toBe 12
-    expect(nbs.foldr1 nbs['&&'], [1 > 2, 3 > 2, 5 == 5]).toBeFalsy()
+    expect(nbs.foldr1 nbs['&&'], [1 > 2, 3 > 2, 5 is 5]).toBeFalsy()
     expect(nbs.foldr1 nbs.max, [3, 6, 12, 4, 55, 11]).toBe 55
     expect(nbs.foldr1 ((x, y) -> (x + y) / 2), [12, 4, 10, 6]).toBe 9
   it 'throws an error, where xs is empty', ->
@@ -434,7 +434,7 @@ describe 'nbs.all(p, xs)', ->
   it 'returns true, where all elements of xs satisfy p', ->
     expect(nbs.all ((x) -> x > 0), [3..16]).toBeTruthy()
   it 'returns false, where xs contains elements not satisfying p', ->
-    expect(nbs.all ((x) -> x % 3 == 0), [1, 2, 4, 5, 6]).toBeFalsy()
+    expect(nbs.all ((x) -> x % 3 is 0), [1, 2, 4, 5, 6]).toBeFalsy()
 
 describe 'nbs.sum(xs)', ->
   it 'returns the summation of xs', ->
@@ -505,7 +505,7 @@ describe 'nbs.scanr1(f, xs)', ->
     expect(nbs.scanr1 nbs['+'], [1..4]).toEqual [10, 9, 7, 4]
     expect(nbs.scanr1 nbs['/'], [8, 12, 24, 2]).toEqual [8, 1, 12, 2]
     expect(nbs.scanr1 nbs['/'], [12]).toEqual [12]
-    expect(nbs.scanr1 nbs['&&'], [1 > 2, 3 > 2, 5 == 5]).toEqual(
+    expect(nbs.scanr1 nbs['&&'], [1 > 2, 3 > 2, 5 is 5]).toEqual(
       [false, true, true])
     expect(nbs.scanr1 nbs.max, [3, 6, 12, 4, 55, 11]).toEqual(
       [55, 55, 55, 55, 55, 11])

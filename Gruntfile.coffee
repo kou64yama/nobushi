@@ -18,6 +18,9 @@ module.exports = (grunt) ->
       coffee:
         files: ['<%= config.src %>/{,*/}*.coffee']
         tasks: ['newer:coffeelint:all', 'karma']
+      coffeeLint:
+        files: ['coffeelint.json']
+        tasks: ['coffeelint:all']
       coffeeTest:
         files: [
           '<%= config.dist %>/<%= pkg.name %>.js'
@@ -51,6 +54,7 @@ module.exports = (grunt) ->
 
     # Make sure code styles are up to par and there are no obvious mistakes
     coffeelint:
+      options: configFile: 'coffeelint.json'
       all: ['<%= config.src %>/{,*/}*.coffee']
       test: ['<%= config.test %>/{spec,mock}/{,*/}*.coffee']
       gruntfile: ['Gruntfile.coffee']
