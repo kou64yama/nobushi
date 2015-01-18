@@ -1,7 +1,5 @@
 /node_modules/
 /.tmp/
 /docs/
-/dist/
 /build/
-
 /Gruntfile.js
