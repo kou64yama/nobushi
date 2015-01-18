@@ -17,7 +17,7 @@ module.exports = (grunt) ->
     watch:
       coffee:
         files: ['<%= config.src %>/{,*/}*.coffee']
-        tasks: ['newer:coffeelint:all', 'karma']
+        tasks: ['newer:coffeelint:all', 'replace:dist', 'coffee:dist']
       coffeeLint:
         files: ['coffeelint.json']
         tasks: ['coffeelint:all']
@@ -31,7 +31,7 @@ module.exports = (grunt) ->
         files: ['Gruntfile.coffee']
         tasks: ['coffeelint:gruntfile']
 
-    # Replace @@version
+    # Replace @@keyword
     replace:
       dist:
         options:
@@ -100,7 +100,7 @@ module.exports = (grunt) ->
 
 
   grunt.registerTask 'test', [
-    'build'
+    'replace:dist'
     'karma'
   ]
 
